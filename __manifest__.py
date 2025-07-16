@@ -23,5 +23,13 @@
     'application': True,
     'auto_install': False,
     'license': 'LGPL-3',
-    'icon': '/performance_reviews/static/description/icon.png',
+    'icon': 'performance_reviews/static/description/icon.png',
+    'web_icon': 'performance_reviews,static/description/icon.png',
+    'assets': {
+        'web.assets_backend': [
+            'performance_reviews/static/src/scss/performance_reviews.scss',
+            'performance_reviews/static/src/scss/app.scss',
+            'performance_reviews/static/src/img/menu_icon.png',
+        ],
+    },
 }
