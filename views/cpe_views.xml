@@ -30,6 +30,9 @@
                             type="object" class="oe_highlight"
                             groups="performance_reviews.group_employee"
                             modifiers="{'invisible': [('state', '!=', 'submitted_by_manager')]}"/>
+                    <button name="action_reset_to_draft" string="Reset to Draft"
+                            type="object" groups="performance_reviews.group_hr_manager"
+                            modifiers="{'invisible': [('state', '=', 'draft')]}"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>

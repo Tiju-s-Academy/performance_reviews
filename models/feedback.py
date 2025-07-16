@@ -92,3 +92,22 @@ class PerformanceFeedback(models.Model):
                 'sticky': False,
             }
         }
+        
+    def action_reset_to_draft(self):
+        """Reset 360° Feedback to draft state (HR Manager only)"""
+        self.ensure_one()
+        if not self.env.user.has_group('performance_reviews.group_hr_manager'):
+            raise ValidationError(_("Only HR Managers can reset feedback to draft."))
+        
+        self.state = 'draft'
+        
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('Reset Successful'),
+                'message': _('360° Feedback has been reset to draft state.'),
+                'type': 'success',
+                'sticky': False,
+            }
+        }

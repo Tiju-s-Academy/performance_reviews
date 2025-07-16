@@ -16,6 +16,7 @@
         'views/rre_views.xml',
         'views/cpe_views.xml',
         'views/feedback_views.xml',
+        'views/hr_dashboard_views.xml',
         'data/mail_templates.xml',
     ],
     'installable': True,

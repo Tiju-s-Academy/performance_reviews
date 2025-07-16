@@ -1,0 +1,68 @@
+
+ODOO Performance Reviews Modules
+
+3 Modules/Tabs under performance reviews:
+RREs(Roles, Responsibilities and Expectations)
+CPE (Continuous Performance Engagement)
+360* Feedback
+
+RREs: Roles, Responsibilities and Expecations:
+RRE Date : Should be Default Current Date(DD/MM/YYYY) format. Employees should be allowed to edit this date.
+RRE discussion with Manager – Date(DD/MM/YYYY) format, user can select date. Should not allow date beyond current date. Dates beyond current dates to be disabled. 
+One single page with 3 text boxes with text box headers. i.e. Roles, Responsibilities and Expectations. Text boxes should not accept any “Null” or “Black” values.  
+Roles – column box size can be small. Up to 300 words. Should accept Alphanumeric text and cannot be blank.
+Responsibilities and Expectations column box can be big – up to 5000 words. Should accept Alphanumeric text and cannot be blank.
+All columns should allow all text types - i.e. Text, Numbers, %,  special characters, etc.
+Overall comment : Column box size can be small. Up to 5000 words. Should accept Alphanumeric text and cannot be blank.
+Employee Submit RRE Button for employee. (Manager “Submit button” at the bottom should be disabled for employees).
+#Employee should receive another confirmation notification window. 
+Submit RRE to Manager “Yes” and “No” click button options.
+Once employee clicks “Yes” to submit -> Manager should receive a notification email with details stating -> “Employee Name has submitted RRE for review and further discussion”.
+If Employee clicks “No” – RRE form should not be submitted and employee should be able to update RRE and #steps to be followed.
+Column Name : Manager Feedback : Column box size can be small. Up to 500 words.
+Submit Button at bottom of page.
+Manager should receive another confirmation notification window. 
+Confirm Employee RRE : “Yes” and “No” click button options.
+If manager click “No”, Manager Feedback Column should be editable and submittable.
+
+
+
+
+
+Continuous Performance Engagement (CPE)
+Manager to enter CPE data.
+CPE Date : Date(DD/MM/YYYY) format user can select date. Should not allow date beyond current date. Dates beyond current dates to be disabled. 
+One single page with 3 text boxes with above text box headers. i.e. Accomplishments, Challenges and Tasks. Text boxes should not accept any “Null” or “Black” values.  
+All 3 column boxes size can be big. Up to 5000 words. Should accept Alphanumeric text and cannot be blank.
+Overall comment : Column box size can be big. Up to 5000 words. Should accept Alphanumeric text and cannot be blank.
+Submit CPE Button for Manager. (Employee “Acknowledgement click button” at the bottom should be disabled for Managers).
+#Manager should receive another confirmation notification window. 
+Submit CPE “Yes” and “No” click button options.
+Once manager clicks “Yes” to submit -> Entire data to be saved and Employee should receive a notification email with details stating -> “Manager has submitted your CPE post your last 1:1 discussions. Please review and acknowledge.” 
+If Manager clicks “No” – CPE form should not be submitted, and manager should be able to update CPE and above # process to be repeated.
+#Column Name : Employee CPE Comments (If Any): Column box size can be small. Up to 500 words.
+@“CPE Acknowledged” Button – Once clicked by employee – Should receive a “Yes” , “No” confirmation buttons. If employee clicks “No” button, data should not submit and employee should be able to update/input #“Employee CPE Comments” column and @”CPE Acknowledged” Button process to follow.
+
+
+
+
+
+
+
+
+
+
+
+360* Feedback 
+Employee Action :
+Column Header : “Select your reviewers to initiate your 360* feedback process” .
+6 Columns with drop down options as below.
+
+Employees should be able to select employee names and respective work relation from drop down. 4 columns should be mandatory fields and balance 2 can be optional.
+Once employee fills the columns, there should be a submit. Standard reconfirmation steps to be followed.
+Once employee submits 360* feedback, both Manager and Employee should receive confirmation email stating “Employee full name, has initiated 360* feedback process”.
+Manager Action:
+One big column at the bottom of the page :
+Column Header : Manager Feedback
+Column should accept up to 5000 alphanumeric text. Should 
+Submit Feedback Column with “Yes” and “No” click buttons with standard cross double cross functionality.

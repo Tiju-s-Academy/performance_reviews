@@ -31,6 +31,9 @@
                             type="object" class="oe_highlight"
                             groups="performance_reviews.group_manager"
                             modifiers="{'invisible': [('state', '!=', 'submitted_by_employee')]}"/>
+                    <button name="action_reset_to_draft" string="Reset to Draft"
+                            type="object" groups="performance_reviews.group_hr_manager"
+                            modifiers="{'invisible': [('state', '=', 'draft')]}"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
@@ -83,6 +86,8 @@
                         domain="[('state', '=', 'submitted_by_employee')]"/>
                 <filter string="Reviewed" name="reviewed" 
                         domain="[('state', '=', 'reviewed_by_manager')]"/>
+                <filter string="All RREs" name="all_rres" 
+                        domain="[]" groups="performance_reviews.group_hr_manager"/>
                 <group expand="0" string="Group By">
                     <filter string="Employee" name="employee" 
                             context="{'group_by': 'employee_id'}"/>

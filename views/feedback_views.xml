@@ -31,6 +31,11 @@
                             type="object" class="oe_highlight"
                             groups="performance_reviews.group_manager"
                             modifiers="{'invisible': [('state', '!=', 'submitted')]}"/>
+                    <button name="action_reset_to_draft" 
+                            string="Reset to Draft"
+                            type="object"
+                            groups="performance_reviews.group_hr_manager"
+                            modifiers="{'invisible': [('state', '=', 'draft')]}"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
@@ -115,4 +120,11 @@
               parent="menu_performance_reviews_main"
               action="action_performance_feedback"
               sequence="30"/>
+              
+    <!-- HR Manager Menu for all reviews -->
+    <menuitem id="menu_performance_hr_dashboard"
+              name="HR Dashboard"
+              parent="menu_performance_reviews_root"
+              sequence="100"
+              groups="performance_reviews.group_hr_manager"/>
 </odoo>

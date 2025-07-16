@@ -97,3 +97,22 @@ class PerformanceCPE(models.Model):
                 'sticky': False,
             }
         }
+        
+    def action_reset_to_draft(self):
+        """Reset CPE to draft state (HR Manager only)"""
+        self.ensure_one()
+        if not self.env.user.has_group('performance_reviews.group_hr_manager'):
+            raise ValidationError(_("Only HR Managers can reset CPEs to draft."))
+        
+        self.state = 'draft'
+        
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('Reset Successful'),
+                'message': _('CPE has been reset to draft state.'),
+                'type': 'success',
+                'sticky': False,
+            }
+        }

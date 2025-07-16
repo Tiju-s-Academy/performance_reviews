@@ -20,6 +20,14 @@
         <field name="category_id" ref="module_performance_review_category"/>
         <field name="implied_ids" eval="[(4, ref('group_employee'))]"/>
     </record>
+    
+    <!-- HR Manager Group -->
+    <record id="group_hr_manager" model="res.groups">
+        <field name="name">HR Manager</field>
+        <field name="category_id" ref="module_performance_review_category"/>
+        <field name="implied_ids" eval="[(4, ref('group_manager'))]"/>
+        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+    </record>
 
     <!-- Record Rules -->
     <record id="rre_employee_rule" model="ir.rule">
@@ -62,5 +70,27 @@
         <field name="model_id" ref="model_performance_feedback"/>
         <field name="domain_force">[(1, '=', 1)]</field>
         <field name="groups" eval="[(4, ref('group_manager'))]"/>
+    </record>
+    
+    <!-- HR Manager Rules -->
+    <record id="rre_hr_manager_rule" model="ir.rule">
+        <field name="name">HR Manager RRE Access</field>
+        <field name="model_id" ref="model_performance_rre"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_hr_manager'))]"/>
+    </record>
+    
+    <record id="cpe_hr_manager_rule" model="ir.rule">
+        <field name="name">HR Manager CPE Access</field>
+        <field name="model_id" ref="model_performance_cpe"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_hr_manager'))]"/>
+    </record>
+    
+    <record id="feedback_hr_manager_rule" model="ir.rule">
+        <field name="name">HR Manager 360 Feedback Access</field>
+        <field name="model_id" ref="model_performance_feedback"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+        <field name="groups" eval="[(4, ref('group_hr_manager'))]"/>
     </record>
 </odoo>

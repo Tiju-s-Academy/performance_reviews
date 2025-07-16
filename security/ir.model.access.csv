@@ -1,9 +1,13 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_performance_rre_employee,performance.rre.employee,model_performance_rre,performance_reviews.group_employee,1,1,1,0
 access_performance_rre_manager,performance.rre.manager,model_performance_rre,performance_reviews.group_manager,1,1,1,1
+access_performance_rre_hr_manager,performance.rre.hr.manager,model_performance_rre,performance_reviews.group_hr_manager,1,1,1,1
 access_performance_cpe_employee,performance.cpe.employee,model_performance_cpe,performance_reviews.group_employee,1,1,0,0
 access_performance_cpe_manager,performance.cpe.manager,model_performance_cpe,performance_reviews.group_manager,1,1,1,1
+access_performance_cpe_hr_manager,performance.cpe.hr.manager,model_performance_cpe,performance_reviews.group_hr_manager,1,1,1,1
 access_performance_feedback_employee,performance.feedback.employee,model_performance_feedback,performance_reviews.group_employee,1,1,1,0
 access_performance_feedback_manager,performance.feedback.manager,model_performance_feedback,performance_reviews.group_manager,1,1,1,1
+access_performance_feedback_hr_manager,performance.feedback.hr.manager,model_performance_feedback,performance_reviews.group_hr_manager,1,1,1,1
 access_performance_reviewer_employee,performance.reviewer.employee,model_performance_reviewer,performance_reviews.group_employee,1,1,1,0
 access_performance_reviewer_manager,performance.reviewer.manager,model_performance_reviewer,performance_reviews.group_manager,1,1,1,1
+access_performance_reviewer_hr_manager,performance.reviewer.hr.manager,model_performance_reviewer,performance_reviews.group_hr_manager,1,1,1,1
