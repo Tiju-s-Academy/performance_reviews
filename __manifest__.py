@@ -23,4 +23,5 @@
     'application': True,
     'auto_install': False,
     'license': 'LGPL-3',
+    'icon': '/performance_reviews/static/description/icon.png',
 }
