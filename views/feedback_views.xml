@@ -29,7 +29,7 @@
                     <button name="action_submit_manager_feedback" 
                             string="Submit Manager Feedback"
                             type="object" class="oe_highlight"
-                            groups="performance_reviews.group_manager"
+                            groups="performance_reviews.group_employee"
                             modifiers="{'invisible': [('state', '!=', 'submitted')]}"/>
                     <button name="action_reset_to_draft" 
                             string="Reset to Draft"
@@ -54,7 +54,7 @@
                             </field>
                         </page>
                         <page string="Manager Feedback" name="manager_feedback"
-                              groups="performance_reviews.group_manager">
+                              groups="performance_reviews.group_employee">
                             <group>
                                 <field name="manager_feedback" modifiers="{'readonly': [('state', '!=', 'draft')]}" placeholder="Manager's feedback (max 5000 words)"/>
                             </group>

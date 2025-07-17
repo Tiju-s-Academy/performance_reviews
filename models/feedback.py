@@ -74,8 +74,8 @@ class PerformanceFeedback(models.Model):
     def action_submit_manager_feedback(self):
         """Submit manager's feedback"""
         self.ensure_one()
-        if not self.env.user.has_group('performance_reviews.group_manager'):
-            raise ValidationError(_("Only managers can submit feedback."))
+        if self.env.user.id != self.manager_id.id:
+            raise ValidationError(_("Only the assigned manager can submit feedback."))
         
         if not self.manager_feedback or not self.manager_feedback.strip():
             raise ValidationError(_("Please provide feedback before submitting."))

@@ -88,8 +88,8 @@ class PerformanceRRE(models.Model):
     def action_submit_review(self):
         """Submit manager's review"""
         self.ensure_one()
-        if not self.env.user.has_group('performance_reviews.group_manager'):
-            raise ValidationError(_("Only managers can submit reviews."))
+        if self.env.user.id != self.manager_id.id:
+            raise ValidationError(_("Only the assigned manager can submit reviews."))
         
         if not self.manager_feedback:
             raise ValidationError(_("Please provide feedback before submitting the review."))

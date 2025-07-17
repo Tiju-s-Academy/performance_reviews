@@ -24,7 +24,7 @@
                 <header>
                     <button name="action_submit_cpe" string="Submit CPE"
                             type="object" class="oe_highlight"
-                            groups="performance_reviews.group_manager"
+                            groups="performance_reviews.group_employee"
                             modifiers="{'invisible': [('state', '!=', 'draft')]}"/>
                     <button name="action_acknowledge_cpe" string="Acknowledge CPE"
                             type="object" class="oe_highlight"

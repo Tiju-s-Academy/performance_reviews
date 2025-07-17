@@ -59,8 +59,8 @@ class PerformanceCPE(models.Model):
     def action_submit_cpe(self):
         """Submit CPE by manager"""
         self.ensure_one()
-        if not self.env.user.has_group('performance_reviews.group_manager'):
-            raise ValidationError(_("Only managers can submit CPE."))
+        if self.env.user.id != self.manager_id.id:
+            raise ValidationError(_("Only the assigned manager can submit CPE."))
         
         self.state = 'submitted_by_manager'
         
