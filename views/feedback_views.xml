@@ -5,7 +5,7 @@
         <field name="name">performance.feedback.tree</field>
         <field name="model">performance.feedback</field>
         <field name="arch" type="xml">
-            <tree string="360 Degree Feedback" decoration-info="state == 'draft'" 
+            <tree decoration-info="state == 'draft'" 
                   decoration-success="state == 'completed'" 
                   decoration-warning="state == 'in_progress'">
                 <field name="employee_id"/>
@@ -21,54 +21,54 @@
         <field name="name">performance.feedback.form</field>
         <field name="model">performance.feedback</field>
         <field name="arch" type="xml">
-            <form string="360 Degree Feedback">
+            <form>
                 <header>
                     <button name="action_submit_request" string="Submit Request"
                             type="object" class="oe_highlight"
                             groups="performance_reviews.group_employee"
-                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                            invisible="state != 'draft'"/>
                     <button name="action_complete_feedback" string="Complete Feedback"
                             type="object" class="oe_highlight"
                             groups="performance_reviews.group_hr_manager"
-                            attrs="{'invisible': [('state', '!=', 'in_progress')]}"/>
+                            invisible="state != 'in_progress'"/>
                     <button name="action_reset_to_draft" string="Reset to Draft"
                             type="object" groups="performance_reviews.group_hr_manager"
-                            attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                            invisible="state == 'draft'"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <group>
                         <group>
-                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="manager_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="feedback_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="employee_id" readonly="state != 'draft'"/>
+                            <field name="manager_id" readonly="state != 'draft'"/>
+                            <field name="feedback_date" readonly="state != 'draft'"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Employee Request" name="employee_request">
                             <group>
-                                <field name="request_details" attrs="{'readonly': [('state', '!=', 'draft')]}" 
+                                <field name="request_details" readonly="state != 'draft'" 
                                        placeholder="Details about your 360 degree feedback request (max 500 words)"/>
                             </group>
                         </page>
                         <page string="Feedback Details" name="feedback">
                             <group>
-                                <field name="technical_performance" attrs="{'readonly': [('state', '=', 'completed')]}" 
+                                <field name="technical_performance" readonly="state == 'completed'" 
                                        groups="performance_reviews.group_hr_manager" 
                                        placeholder="Technical performance feedback (max 500 words)"/>
-                                <field name="interpersonal_skills" attrs="{'readonly': [('state', '=', 'completed')]}" 
+                                <field name="interpersonal_skills" readonly="state == 'completed'" 
                                        groups="performance_reviews.group_hr_manager" 
                                        placeholder="Interpersonal skills feedback (max 500 words)"/>
-                                <field name="leadership_skills" attrs="{'readonly': [('state', '=', 'completed')]}" 
+                                <field name="leadership_skills" readonly="state == 'completed'" 
                                        groups="performance_reviews.group_hr_manager" 
                                        placeholder="Leadership skills feedback (max 500 words)"/>
-                                <field name="strengths" attrs="{'readonly': [('state', '=', 'completed')]}" 
+                                <field name="strengths" readonly="state == 'completed'" 
                                        groups="performance_reviews.group_hr_manager" 
                                        placeholder="Strengths observed (max 500 words)"/>
-                                <field name="areas_for_improvement" attrs="{'readonly': [('state', '=', 'completed')]}" 
+                                <field name="areas_for_improvement" readonly="state == 'completed'" 
                                        groups="performance_reviews.group_hr_manager" 
                                        placeholder="Areas for improvement (max 500 words)"/>
-                                <field name="overall_feedback" attrs="{'readonly': [('state', '=', 'completed')]}" 
+                                <field name="overall_feedback" readonly="state == 'completed'" 
                                        groups="performance_reviews.group_hr_manager" 
                                        placeholder="Overall feedback (max 500 words)"/>
                             </group>
@@ -89,7 +89,7 @@
         <field name="name">performance.feedback.search</field>
         <field name="model">performance.feedback</field>
         <field name="arch" type="xml">
-            <search string="Search 360 Feedback">
+            <search>
                 <field name="employee_id"/>
                 <field name="manager_id"/>
                 <field name="feedback_date"/>

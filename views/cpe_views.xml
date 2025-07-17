@@ -5,7 +5,7 @@
         <field name="name">performance.cpe.tree</field>
         <field name="model">performance.cpe</field>
         <field name="arch" type="xml">
-            <tree string="CPEs" decoration-info="state == 'draft'" 
+            <tree decoration-info="state == 'draft'" 
                   decoration-success="state == 'reviewed'" 
                   decoration-warning="state == 'submitted'">
                 <field name="employee_id"/>
@@ -21,45 +21,45 @@
         <field name="name">performance.cpe.form</field>
         <field name="model">performance.cpe</field>
         <field name="arch" type="xml">
-            <form string="CPE">
+            <form>
                 <header>
                     <button name="action_submit_cpe" string="Submit CPE"
                             type="object" class="oe_highlight"
                             groups="performance_reviews.group_employee"
-                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                            invisible="state != 'draft'"/>
                     <button name="action_submit_review" string="Submit Review"
                             type="object" class="oe_highlight"
                             groups="performance_reviews.group_hr_manager"
-                            attrs="{'invisible': [('state', '!=', 'submitted')]}"/>
+                            invisible="state != 'submitted'"/>
                     <button name="action_reset_to_draft" string="Reset to Draft"
                             type="object" groups="performance_reviews.group_hr_manager"
-                            attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                            invisible="state == 'draft'"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <group>
                         <group>
-                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="manager_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="cpe_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="employee_id" readonly="state != 'draft'"/>
+                            <field name="manager_id" readonly="state != 'draft'"/>
+                            <field name="cpe_date" readonly="state != 'draft'"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Employee Inputs" name="employee_inputs">
                             <group>
-                                <field name="what_went_well" attrs="{'readonly': [('state', '!=', 'draft')]}" 
+                                <field name="what_went_well" readonly="state != 'draft'" 
                                        placeholder="What went well during this period? (max 300 words)"/>
-                                <field name="what_could_be_improved" attrs="{'readonly': [('state', '!=', 'draft')]}" 
+                                <field name="what_could_be_improved" readonly="state != 'draft'" 
                                        placeholder="What could be improved? (max 300 words)"/>
-                                <field name="goals_for_next_period" attrs="{'readonly': [('state', '!=', 'draft')]}" 
+                                <field name="goals_for_next_period" readonly="state != 'draft'" 
                                        placeholder="Goals for next period (max 300 words)"/>
-                                <field name="overall_comment" attrs="{'readonly': [('state', '!=', 'draft')]}" 
+                                <field name="overall_comment" readonly="state != 'draft'" 
                                        placeholder="Overall comments (max 300 words)"/>
                             </group>
                         </page>
                         <page string="Manager Feedback" name="feedback">
                             <group>
-                                <field name="manager_feedback" attrs="{'readonly': [('state', '=', 'reviewed')]}" 
+                                <field name="manager_feedback" readonly="state == 'reviewed'" 
                                        groups="performance_reviews.group_hr_manager" 
                                        placeholder="Manager's feedback (max 300 words)"/>
                             </group>
@@ -80,7 +80,7 @@
         <field name="name">performance.cpe.search</field>
         <field name="model">performance.cpe</field>
         <field name="arch" type="xml">
-            <search string="Search CPE">
+            <search>
                 <field name="employee_id"/>
                 <field name="manager_id"/>
                 <field name="cpe_date"/>

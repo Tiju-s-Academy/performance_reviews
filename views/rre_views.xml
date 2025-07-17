@@ -5,7 +5,7 @@
         <field name="name">performance.rre.tree</field>
         <field name="model">performance.rre</field>
         <field name="arch" type="xml">
-            <tree string="RREs" decoration-info="state == 'draft'" 
+            <tree decoration-info="state == 'draft'" 
                   decoration-success="state == 'reviewed_by_manager'" 
                   decoration-warning="state == 'submitted_by_employee'">
                 <field name="employee_id"/>
@@ -22,42 +22,48 @@
         <field name="name">performance.rre.form</field>
         <field name="model">performance.rre</field>
         <field name="arch" type="xml">
-            <form string="RRE">
+            <form>
                 <header>
                     <button name="action_submit_rre" string="Submit RRE"
                             type="object" class="oe_highlight"
                             groups="performance_reviews.group_employee"
-                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                            invisible="state != 'draft'"/>
                     <button name="action_submit_review" string="Submit Review"
                             type="object" class="oe_highlight"
                             groups="performance_reviews.group_employee"
-                            attrs="{'invisible': [('state', '!=', 'submitted_by_employee')]}"/>
+                            invisible="state != 'submitted_by_employee'"/>
                     <button name="action_reset_to_draft" string="Reset to Draft"
                             type="object" groups="performance_reviews.group_hr_manager"
-                            attrs="{'invisible': [('state', '=', 'draft')]}"/>
+                            invisible="state == 'draft'"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <group>
                         <group>
-                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="manager_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="rre_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="discussion_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="employee_id" readonly="state != 'draft'"/>
+                            <field name="manager_id" readonly="state != 'draft'"/>
+                            <field name="rre_date" readonly="state != 'draft'"/>
+                            <field name="discussion_date" readonly="state != 'draft'"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Roles, Responsibilities and Expectations" name="rre">
                             <group>
-                                <field name="roles" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Describe your roles (max 300 words)"/>
-                                <field name="responsibilities" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="List your responsibilities (max 5000 words)"/>
-                                <field name="expectations" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Describe expectations (max 5000 words)"/>
-                                <field name="overall_comment" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Overall comments (max 5000 words)"/>
+                                <field name="roles" readonly="state != 'draft'" 
+                                       placeholder="Describe your roles (max 300 words)"/>
+                                <field name="responsibilities" readonly="state != 'draft'" 
+                                       placeholder="List your responsibilities (max 5000 words)"/>
+                                <field name="expectations" readonly="state != 'draft'" 
+                                       placeholder="Describe expectations (max 5000 words)"/>
+                                <field name="overall_comment" readonly="state != 'draft'" 
+                                       placeholder="Overall comments (max 5000 words)"/>
                             </group>
                         </page>
                         <page string="Manager Feedback" name="feedback">
                             <group>
-                                <field name="manager_feedback" attrs="{'readonly': [('state', '=', 'reviewed_by_manager')]}" groups="performance_reviews.group_employee" placeholder="Manager's feedback (max 500 words)"/>
+                                <field name="manager_feedback" readonly="state == 'reviewed_by_manager'" 
+                                       groups="performance_reviews.group_employee" 
+                                       placeholder="Manager's feedback (max 500 words)"/>
                             </group>
                         </page>
                     </notebook>
@@ -76,7 +82,7 @@
         <field name="name">performance.rre.search</field>
         <field name="model">performance.rre</field>
         <field name="arch" type="xml">
-            <search string="Search RRE">
+            <search>
                 <field name="employee_id"/>
                 <field name="manager_id"/>
                 <field name="rre_date"/>
