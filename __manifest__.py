@@ -9,7 +9,7 @@
         - Continuous Performance Engagement (CPE)
         - 360° Feedback System
     """,
-    'depends': ['base', 'mail'],
+    'depends': ['base', 'mail', 'hr'],
     'data': [
         'security/security.xml',
         'security/ir.model.access.csv',
