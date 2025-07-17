@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<o                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="rre_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="discussion_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>>
     <!-- RRE Tree View -->
     <record id="view_performance_rre_tree" model="ir.ui.view">
         <field name="name">performance.rre.tree</field>
@@ -47,15 +49,15 @@
                     <notebook>
                         <page string="Roles, Responsibilities and Expectations" name="rre">
                             <group>
-                                <field name="roles" modifiers="{'readonly': [('state', '!=', 'draft')]}" placeholder="Describe your roles (max 300 words)"/>
-                                <field name="responsibilities" modifiers="{'readonly': [('state', '!=', 'draft')]}" placeholder="List your responsibilities (max 5000 words)"/>
-                                <field name="expectations" modifiers="{'readonly': [('state', '!=', 'draft')]}" placeholder="Describe expectations (max 5000 words)"/>
-                                <field name="overall_comment" modifiers="{'readonly': [('state', '!=', 'draft')]}" placeholder="Overall comments (max 5000 words)"/>
+                                <field name="roles" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Describe your roles (max 300 words)"/>
+                                <field name="responsibilities" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="List your responsibilities (max 5000 words)"/>
+                                <field name="expectations" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Describe expectations (max 5000 words)"/>
+                                <field name="overall_comment" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Overall comments (max 5000 words)"/>
                             </group>
                         </page>
                         <page string="Manager Feedback" name="feedback">
                             <group>
-                                <field name="manager_feedback" modifiers="{'readonly': [('state', '!=', 'submitted_by_employee')]}" groups="performance_reviews.group_employee" placeholder="Manager's feedback (max 500 words)"/>
+                                <field name="manager_feedback" attrs="{'readonly': [('state', '=', 'reviewed_by_manager')]}" groups="performance_reviews.group_employee" placeholder="Manager's feedback (max 500 words)"/>
                             </group>
                         </page>
                     </notebook>

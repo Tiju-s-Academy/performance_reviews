@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo>
+<                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="cpe_date" attrs="{'readonly': [('state', '!=', 'draft')]}/>oo>
     <!-- CPE Tree View -->
     <record id="view_performance_cpe_tree" model="ir.ui.view">
         <field name="name">performance.cpe.tree</field>
@@ -45,15 +46,15 @@
                     <notebook>
                         <page string="Performance Review" name="performance">
                             <group>
-                                <field name="accomplishments" modifiers="{'readonly': [('state', '!=', 'draft')]}" placeholder="Key accomplishments (max 5000 words)"/>
-                                <field name="challenges" modifiers="{'readonly': [('state', '!=', 'draft')]}" placeholder="Challenges faced (max 5000 words)"/>
-                                <field name="tasks" modifiers="{'readonly': [('state', '!=', 'draft')]}" placeholder="Tasks and goals (max 5000 words)"/>
-                                <field name="overall_comment" modifiers="{'readonly': [('state', '!=', 'draft')]}" placeholder="Overall comments (max 5000 words)"/>
+                                <field name="accomplishments" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Key accomplishments (max 5000 words)"/>
+                                <field name="challenges" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Challenges faced (max 5000 words)"/>
+                                <field name="tasks" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Tasks and goals (max 5000 words)"/>
+                                <field name="overall_comment" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Overall comments (max 5000 words)"/>
                             </group>
                         </page>
                         <page string="Employee Comments" name="comments">
                             <group>
-                                <field name="employee_comment" modifiers="{'readonly': [('state', '!=', 'draft')]}" placeholder="Employee comments (max 500 words)"/>
+                                <field name="employee_comment" attrs="{'readonly': [('state', '!=', 'submitted_by_manager')]}" placeholder="Employee comments (max 500 words)"/>
                             </group>
                         </page>
                     </notebook>

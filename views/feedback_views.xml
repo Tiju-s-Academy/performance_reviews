@@ -41,12 +41,12 @@
                 <sheet>
                     <group>
                         <group>
-                            <field name="employee_id" modifiers="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                         </group>
                     </group>
                     <notebook>
                         <page string="Reviewers" name="reviewers">
-                            <field name="reviewers" modifiers="{'readonly': [('state', '!=', 'draft')]}" >
+                            <field name="reviewers" attrs="{'readonly': [('state', '!=', 'draft')]}" >
                                 <tree editable="bottom">
                                     <field name="reviewer_id"/>
                                     <field name="relation_type"/>
@@ -56,7 +56,7 @@
                         <page string="Manager Feedback" name="manager_feedback"
                               groups="performance_reviews.group_employee">
                             <group>
-                                <field name="manager_feedback" modifiers="{'readonly': [('state', '!=', 'draft')]}" placeholder="Manager's feedback (max 5000 words)"/>
+                                <field name="manager_feedback" attrs="{'readonly': [('state', '=', 'reviewed')]}" placeholder="Manager's feedback (max 5000 words)"/>
                             </group>
                         </page>
                     </notebook>

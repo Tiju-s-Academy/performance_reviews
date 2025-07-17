@@ -71,5 +71,5 @@ New
 
 Changes to be done.
 1. Ideally the status should get changed from "Draft" to "Submitted by Employee" the moment employee submit RRE and gets a "green pop-up saying "Your RRE is submitted".
- 2. I'm still able to update my submitted RRE. Employee should not be able to update RRE once it is submitted to the Manager for review. PFA screen shot. 
+2. I'm still able to update my submitted RRE. Employee should not be able to update RRE once it is submitted to the Manager for review. PFA screen shot. 
 3. Same functionality should be there for Manager Feedback Tab - Once manager has clicked the submit button and feedback is submitted then that feedback should be locked and not editable.
