@@ -59,17 +59,8 @@ class PerformanceRRE(models.Model):
             if record.manager_feedback and len(record.manager_feedback.split()) > 500:
                 raise ValidationError(_("Manager feedback must not exceed 500 words."))
 
-            # Check for alphanumeric content (with basic punctuation)
-            pattern = r'^[a-zA-Z0-9\s.,!?()-]*$'
-            for field, field_name in [
-                (record.roles, 'Roles'),
-                (record.responsibilities, 'Responsibilities'),
-                (record.expectations, 'Expectations')
-            ]:
-                if not re.match(pattern, field):
-                    raise ValidationError(
-                        _("%s must contain only alphanumeric characters and basic "
-                          "punctuation.") % field_name)
+            # Client requirement specifies all text types should be allowed
+            # No character validation needed as all special characters are allowed
 
     def action_submit_rre(self):
         """Submit RRE to manager"""
