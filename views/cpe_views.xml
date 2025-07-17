@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="manager_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="cpe_date" attrs="{'readonly': [('state', '!=', 'draft')]}/>oo>
     <!-- CPE Tree View -->
     <record id="view_performance_cpe_tree" model="ir.ui.view">

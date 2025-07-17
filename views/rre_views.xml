@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <o                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="manager_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="rre_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                             <field name="discussion_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>>
     <!-- RRE Tree View -->

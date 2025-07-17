@@ -13,6 +13,7 @@ class PerformanceRRE(models.Model):
 
     employee_id = fields.Many2one('res.users', string='Employee', required=True,
                                 default=_default_employee, tracking=True)
+    manager_id = fields.Many2one('res.users', string='Manager', tracking=True)
     rre_date = fields.Date(string='RRE Date', required=True, default=fields.Date.today,
                           tracking=True)
     discussion_date = fields.Date(string='Discussion Date', required=True,
@@ -35,6 +36,14 @@ class PerformanceRRE(models.Model):
         for record in self:
             if record.discussion_date > fields.Date.today():
                 raise ValidationError(_("Discussion date cannot be in the future."))
+                
+    @api.onchange('employee_id')
+    def _onchange_employee_id(self):
+        """Set the manager when employee changes"""
+        if self.employee_id:
+            employee = self.env['hr.employee'].search([('user_id', '=', self.employee_id.id)], limit=1)
+            if employee and employee.parent_id and employee.parent_id.user_id:
+                self.manager_id = employee.parent_id.user_id.id
 
     @api.constrains('roles', 'responsibilities', 'expectations', 'overall_comment',
                     'manager_feedback')
@@ -88,6 +97,9 @@ class PerformanceRRE(models.Model):
     def action_submit_review(self):
         """Submit manager's review"""
         self.ensure_one()
+        if not self.manager_id:
+            raise ValidationError(_("No manager assigned to this RRE."))
+            
         if self.env.user.id != self.manager_id.id:
             raise ValidationError(_("Only the assigned manager can submit reviews."))
         

@@ -12,6 +12,7 @@ class PerformanceCPE(models.Model):
 
     employee_id = fields.Many2one('res.users', string='Employee', required=True,
                                 default=_default_employee, tracking=True)
+    manager_id = fields.Many2one('res.users', string='Manager', tracking=True)
     cpe_date = fields.Date(string='CPE Date', required=True,
                           default=fields.Date.today, tracking=True)
     accomplishments = fields.Text(string='Accomplishments', required=True,
@@ -32,6 +33,14 @@ class PerformanceCPE(models.Model):
         for record in self:
             if record.cpe_date > fields.Date.today():
                 raise ValidationError(_("CPE date cannot be in the future."))
+                
+    @api.onchange('employee_id')
+    def _onchange_employee_id(self):
+        """Set the manager when employee changes"""
+        if self.employee_id:
+            employee = self.env['hr.employee'].search([('user_id', '=', self.employee_id.id)], limit=1)
+            if employee and employee.parent_id and employee.parent_id.user_id:
+                self.manager_id = employee.parent_id.user_id.id
 
     @api.constrains('accomplishments', 'challenges', 'tasks', 'overall_comment',
                    'employee_comment')
@@ -59,6 +68,9 @@ class PerformanceCPE(models.Model):
     def action_submit_cpe(self):
         """Submit CPE by manager"""
         self.ensure_one()
+        if not self.manager_id:
+            raise ValidationError(_("No manager assigned to this CPE."))
+            
         if self.env.user.id != self.manager_id.id:
             raise ValidationError(_("Only the assigned manager can submit CPE."))
         

@@ -11,6 +11,7 @@ class PerformanceFeedback(models.Model):
 
     employee_id = fields.Many2one('res.users', string='Employee', required=True,
                                 default=_default_employee, tracking=True)
+    manager_id = fields.Many2one('res.users', string='Manager', tracking=True)
     reviewers = fields.One2many('performance.reviewer', 'feedback_id',
                                string='Reviewers')
     manager_feedback = fields.Text(string='Manager Feedback', tracking=True)
@@ -37,6 +38,14 @@ class PerformanceFeedback(models.Model):
                 raise ValidationError(
                     _("Missing reviewers from the following categories: %s") %
                     ', '.join(missing_types))
+                
+    @api.onchange('employee_id')
+    def _onchange_employee_id(self):
+        """Set the manager when employee changes"""
+        if self.employee_id:
+            employee = self.env['hr.employee'].search([('user_id', '=', self.employee_id.id)], limit=1)
+            if employee and employee.parent_id and employee.parent_id.user_id:
+                self.manager_id = employee.parent_id.user_id.id
 
     @api.constrains('manager_feedback')
     def _check_manager_feedback(self):
@@ -74,6 +83,9 @@ class PerformanceFeedback(models.Model):
     def action_submit_manager_feedback(self):
         """Submit manager's feedback"""
         self.ensure_one()
+        if not self.manager_id:
+            raise ValidationError(_("No manager assigned to this feedback."))
+            
         if self.env.user.id != self.manager_id.id:
             raise ValidationError(_("Only the assigned manager can submit feedback."))
         
