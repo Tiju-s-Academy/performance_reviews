@@ -15,17 +15,15 @@ class PerformanceCPE(models.Model):
     manager_id = fields.Many2one('res.users', string='Manager', tracking=True)
     cpe_date = fields.Date(string='CPE Date', required=True,
                           default=fields.Date.today, tracking=True)
-    accomplishments = fields.Text(string='Accomplishments', required=True,
-                                tracking=True)
-    challenges = fields.Text(string='Challenges', required=True, tracking=True)
-    tasks = fields.Text(string='Tasks', required=True, tracking=True)
-    overall_comment = fields.Text(string='Overall Comment', required=True,
-                                tracking=True)
-    employee_comment = fields.Text(string='Employee Comment', tracking=True)
+    what_went_well = fields.Text(string='What Went Well', required=True, tracking=True)
+    what_could_be_improved = fields.Text(string='What Could Be Improved', required=True, tracking=True)
+    goals_for_next_period = fields.Text(string='Goals for Next Period', required=True, tracking=True)
+    overall_comment = fields.Text(string='Overall Comment', required=True, tracking=True)
+    manager_feedback = fields.Text(string='Manager Feedback', tracking=True)
     state = fields.Selection([
         ('draft', 'Draft'),
-        ('submitted_by_manager', 'Submitted by Manager'),
-        ('acknowledged_by_employee', 'Acknowledged by Employee')
+        ('submitted', 'Submitted'),
+        ('reviewed', 'Reviewed')
     ], string='Status', default='draft', tracking=True)
 
     @api.constrains('cpe_date')
@@ -42,39 +40,61 @@ class PerformanceCPE(models.Model):
             if employee and employee.parent_id and employee.parent_id.user_id:
                 self.manager_id = employee.parent_id.user_id.id
 
-    @api.constrains('accomplishments', 'challenges', 'tasks', 'overall_comment',
-                   'employee_comment')
+    @api.constrains('what_went_well', 'what_could_be_improved', 'goals_for_next_period', 
+                    'overall_comment', 'manager_feedback')
     def _check_text_fields(self):
         for record in self:
             # Check required fields are not empty
             for field, field_name in [
-                (record.accomplishments, 'Accomplishments'),
-                (record.challenges, 'Challenges'),
-                (record.tasks, 'Tasks'),
+                (record.what_went_well, 'What Went Well'),
+                (record.what_could_be_improved, 'What Could Be Improved'),
+                (record.goals_for_next_period, 'Goals for Next Period'),
                 (record.overall_comment, 'Overall Comment')
             ]:
                 if not field or not field.strip():
                     raise ValidationError(_(f"{field_name} cannot be empty."))
 
             # Check word count limits
-            for field in [record.accomplishments, record.challenges,
-                         record.tasks, record.overall_comment]:
-                if len(field.split()) > 5000:
-                    raise ValidationError(_("Text fields must not exceed 5000 words."))
+            for field in [record.what_went_well, record.what_could_be_improved,
+                         record.goals_for_next_period, record.overall_comment]:
+                if len(field.split()) > 300:
+                    raise ValidationError(_("Text fields must not exceed 300 words."))
             
-            if record.employee_comment and len(record.employee_comment.split()) > 500:
-                raise ValidationError(_("Employee comment must not exceed 500 words."))
+            if record.manager_feedback and len(record.manager_feedback.split()) > 300:
+                raise ValidationError(_("Manager feedback must not exceed 300 words."))
 
     def action_submit_cpe(self):
-        """Submit CPE by manager"""
+        """Submit CPE by employee"""
+        self.ensure_one()
+        if self.env.user != self.employee_id:
+            raise ValidationError(_("Only the employee can submit their own CPE."))
+        
+        self.state = 'submitted'
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'title': _('Success'),
+                'message': _('CPE has been submitted to your manager.'),
+                'type': 'success',
+                'sticky': False,
+            }
+        }
+
+    def action_submit_review(self):
+        """Manager submits review"""
         self.ensure_one()
         if not self.manager_id:
             raise ValidationError(_("No manager assigned to this CPE."))
             
-        if self.env.user.id != self.manager_id.id:
-            raise ValidationError(_("Only the assigned manager can submit CPE."))
+        if self.env.user.id != self.manager_id.id and not self.env.user.has_group('performance_reviews.group_hr_manager'):
+            raise ValidationError(_("Only the assigned manager or HR managers can submit reviews."))
         
-        self.state = 'submitted_by_manager'
+        if not self.manager_feedback or not self.manager_feedback.strip():
+            raise ValidationError(_("Please provide feedback before submitting the review."))
+        
+        self.state = 'reviewed'
         
         # Send email to employee
         template = self.env.ref('performance_reviews.email_template_cpe_submitted')
@@ -85,26 +105,7 @@ class PerformanceCPE(models.Model):
             'tag': 'display_notification',
             'params': {
                 'title': _('Success'),
-                'message': _('CPE has been submitted to the employee.'),
-                'type': 'success',
-                'sticky': False,
-            }
-        }
-
-    def action_acknowledge_cpe(self):
-        """Employee acknowledges CPE"""
-        self.ensure_one()
-        if self.env.user != self.employee_id:
-            raise ValidationError(_("Only the employee can acknowledge their CPE."))
-        
-        self.state = 'acknowledged_by_employee'
-
-        return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': _('Success'),
-                'message': _('CPE has been acknowledged.'),
+                'message': _('Review has been submitted successfully.'),
                 'type': 'success',
                 'sticky': False,
             }

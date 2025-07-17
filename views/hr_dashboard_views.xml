@@ -54,6 +54,13 @@
         </field>
     </record>
     
+    <!-- HR Dashboard Main Menu -->
+    <menuitem id="menu_performance_hr_dashboard"
+              name="HR Dashboard"
+              parent="menu_performance_reviews_root"
+              sequence="20"
+              groups="performance_reviews.group_hr_manager"/>
+    
     <!-- HR Manager Dashboard Menu Items -->
     <menuitem id="menu_hr_manager_rre"
               name="All RREs"

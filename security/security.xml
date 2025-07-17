@@ -1,68 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Performance Review Security Groups -->
-    <record id="module_performance_review_category" model="ir.module.category">
-        <field name="name">Performance Reviews</field>
-        <field name="description">User access level for Performance Reviews</field>
-        <field name="sequence">20</field>
-    </record>
-
-    <!-- Employee Group -->
+    <!-- Security Groups -->
     <record id="group_employee" model="res.groups">
         <field name="name">Employee</field>
-        <field name="category_id" ref="module_performance_review_category"/>
         <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
     </record>
-    
-    <!-- HR Manager Group -->
+
     <record id="group_hr_manager" model="res.groups">
         <field name="name">HR Manager</field>
-        <field name="category_id" ref="module_performance_review_category"/>
-        <field name="implied_ids" eval="[(4, ref('group_employee'))]"/>
-        <field name="users" eval="[(4, ref('base.user_admin'))]"/>
+        <field name="implied_ids" eval="[(4, ref('performance_reviews.group_employee'))]"/>
+        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
     </record>
 
     <!-- Record Rules -->
-    <record id="rre_employee_rule" model="ir.rule">
-        <field name="name">Employee RRE Access</field>
+    <!-- RRE Rules -->
+    <record id="rule_rre_employee" model="ir.rule">
+        <field name="name">Employee RRE Rule</field>
         <field name="model_id" ref="model_performance_rre"/>
-        <field name="domain_force">['|', ('employee_id', '=', user.id), ('manager_id', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('group_employee'))]"/>
+        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
     </record>
 
-    <record id="cpe_employee_rule" model="ir.rule">
-        <field name="name">Employee CPE Access</field>
-        <field name="model_id" ref="model_performance_cpe"/>
-        <field name="domain_force">['|', ('employee_id', '=', user.id), ('manager_id', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('group_employee'))]"/>
+    <record id="rule_rre_manager" model="ir.rule">
+        <field name="name">Manager RRE Rule</field>
+        <field name="model_id" ref="model_performance_rre"/>
+        <field name="domain_force">[('manager_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
     </record>
 
-    <record id="feedback_employee_rule" model="ir.rule">
-        <field name="name">Employee 360 Feedback Access</field>
-        <field name="model_id" ref="model_performance_feedback"/>
-        <field name="domain_force">['|', '|', ('employee_id', '=', user.id), ('reviewers.reviewer_id', '=', user.id), ('manager_id', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('group_employee'))]"/>
-    </record>
-    
-    <!-- HR Manager Rules -->
-    <record id="rre_hr_manager_rule" model="ir.rule">
-        <field name="name">HR Manager RRE Access</field>
+    <record id="rule_rre_hr_manager" model="ir.rule">
+        <field name="name">HR Manager RRE Rule</field>
         <field name="model_id" ref="model_performance_rre"/>
         <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_hr_manager'))]"/>
+        <field name="groups" eval="[(4, ref('performance_reviews.group_hr_manager'))]"/>
     </record>
-    
-    <record id="cpe_hr_manager_rule" model="ir.rule">
-        <field name="name">HR Manager CPE Access</field>
+
+    <!-- CPE Rules -->
+    <record id="rule_cpe_employee" model="ir.rule">
+        <field name="name">Employee CPE Rule</field>
+        <field name="model_id" ref="model_performance_cpe"/>
+        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
+    </record>
+
+    <record id="rule_cpe_manager" model="ir.rule">
+        <field name="name">Manager CPE Rule</field>
+        <field name="model_id" ref="model_performance_cpe"/>
+        <field name="domain_force">[('manager_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
+    </record>
+
+    <record id="rule_cpe_hr_manager" model="ir.rule">
+        <field name="name">HR Manager CPE Rule</field>
         <field name="model_id" ref="model_performance_cpe"/>
         <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_hr_manager'))]"/>
+        <field name="groups" eval="[(4, ref('performance_reviews.group_hr_manager'))]"/>
     </record>
-    
-    <record id="feedback_hr_manager_rule" model="ir.rule">
-        <field name="name">HR Manager 360 Feedback Access</field>
+
+    <!-- Feedback Rules -->
+    <record id="rule_feedback_employee" model="ir.rule">
+        <field name="name">Employee Feedback Rule</field>
+        <field name="model_id" ref="model_performance_feedback"/>
+        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
+    </record>
+
+    <record id="rule_feedback_manager" model="ir.rule">
+        <field name="name">Manager Feedback Rule</field>
+        <field name="model_id" ref="model_performance_feedback"/>
+        <field name="domain_force">[('manager_id.user_id', '=', user.id)]</field>
+        <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
+    </record>
+
+    <record id="rule_feedback_hr_manager" model="ir.rule">
+        <field name="name">HR Manager Feedback Rule</field>
         <field name="model_id" ref="model_performance_feedback"/>
         <field name="domain_force">[(1, '=', 1)]</field>
-        <field name="groups" eval="[(4, ref('group_hr_manager'))]"/>
+        <field name="groups" eval="[(4, ref('performance_reviews.group_hr_manager'))]"/>
     </record>
 </odoo>

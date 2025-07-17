@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="manager_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="cpe_date" attrs="{'readonly': [('state', '!=', 'draft')]}/>oo>
+<odoo>
     <!-- CPE Tree View -->
     <record id="view_performance_cpe_tree" model="ir.ui.view">
         <field name="name">performance.cpe.tree</field>
         <field name="model">performance.cpe</field>
         <field name="arch" type="xml">
             <tree string="CPEs" decoration-info="state == 'draft'" 
-                  decoration-success="state == 'acknowledged_by_employee'" 
-                  decoration-warning="state == 'submitted_by_manager'">
+                  decoration-success="state == 'reviewed'" 
+                  decoration-warning="state == 'submitted'">
                 <field name="employee_id"/>
+                <field name="manager_id"/>
                 <field name="cpe_date"/>
                 <field name="state"/>
             </tree>
@@ -27,35 +26,42 @@
                     <button name="action_submit_cpe" string="Submit CPE"
                             type="object" class="oe_highlight"
                             groups="performance_reviews.group_employee"
-                            modifiers="{'invisible': [('state', '!=', 'draft')]}"/>
-                    <button name="action_acknowledge_cpe" string="Acknowledge CPE"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <button name="action_submit_review" string="Submit Review"
                             type="object" class="oe_highlight"
-                            groups="performance_reviews.group_employee"
-                            modifiers="{'invisible': [('state', '!=', 'submitted_by_manager')]}"/>
+                            groups="performance_reviews.group_hr_manager"
+                            attrs="{'invisible': [('state', '!=', 'submitted')]}"/>
                     <button name="action_reset_to_draft" string="Reset to Draft"
                             type="object" groups="performance_reviews.group_hr_manager"
-                            modifiers="{'invisible': [('state', '=', 'draft')]}"/>
+                            attrs="{'invisible': [('state', '=', 'draft')]}"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <group>
                         <group>
-                            <field name="employee_id" modifiers="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="cpe_date" modifiers="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="manager_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="cpe_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                         </group>
                     </group>
                     <notebook>
-                        <page string="Performance Review" name="performance">
+                        <page string="Employee Inputs" name="employee_inputs">
                             <group>
-                                <field name="accomplishments" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Key accomplishments (max 5000 words)"/>
-                                <field name="challenges" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Challenges faced (max 5000 words)"/>
-                                <field name="tasks" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Tasks and goals (max 5000 words)"/>
-                                <field name="overall_comment" attrs="{'readonly': [('state', '!=', 'draft')]}" placeholder="Overall comments (max 5000 words)"/>
+                                <field name="what_went_well" attrs="{'readonly': [('state', '!=', 'draft')]}" 
+                                       placeholder="What went well during this period? (max 300 words)"/>
+                                <field name="what_could_be_improved" attrs="{'readonly': [('state', '!=', 'draft')]}" 
+                                       placeholder="What could be improved? (max 300 words)"/>
+                                <field name="goals_for_next_period" attrs="{'readonly': [('state', '!=', 'draft')]}" 
+                                       placeholder="Goals for next period (max 300 words)"/>
+                                <field name="overall_comment" attrs="{'readonly': [('state', '!=', 'draft')]}" 
+                                       placeholder="Overall comments (max 300 words)"/>
                             </group>
                         </page>
-                        <page string="Employee Comments" name="comments">
+                        <page string="Manager Feedback" name="feedback">
                             <group>
-                                <field name="employee_comment" attrs="{'readonly': [('state', '!=', 'submitted_by_manager')]}" placeholder="Employee comments (max 500 words)"/>
+                                <field name="manager_feedback" attrs="{'readonly': [('state', '=', 'reviewed')]}" 
+                                       groups="performance_reviews.group_hr_manager" 
+                                       placeholder="Manager's feedback (max 300 words)"/>
                             </group>
                         </page>
                     </notebook>
@@ -76,18 +82,23 @@
         <field name="arch" type="xml">
             <search string="Search CPE">
                 <field name="employee_id"/>
+                <field name="manager_id"/>
                 <field name="cpe_date"/>
                 <filter string="My CPEs" name="my_cpes" 
                         domain="[('employee_id', '=', uid)]"/>
                 <filter string="Draft" name="draft" 
                         domain="[('state', '=', 'draft')]"/>
                 <filter string="Submitted" name="submitted" 
-                        domain="[('state', '=', 'submitted_by_manager')]"/>
-                <filter string="Acknowledged" name="acknowledged" 
-                        domain="[('state', '=', 'acknowledged_by_employee')]"/>
+                        domain="[('state', '=', 'submitted')]"/>
+                <filter string="Reviewed" name="reviewed" 
+                        domain="[('state', '=', 'reviewed')]"/>
+                <filter string="All CPEs" name="all_cpes" 
+                        domain="[]" groups="performance_reviews.group_hr_manager"/>
                 <group expand="0" string="Group By">
                     <filter string="Employee" name="employee" 
                             context="{'group_by': 'employee_id'}"/>
+                    <filter string="Manager" name="manager" 
+                            context="{'group_by': 'manager_id'}"/>
                     <filter string="Status" name="status" 
                             context="{'group_by': 'state'}"/>
                     <filter string="CPE Date" name="cpe_date" 
@@ -109,7 +120,7 @@
                 Create your first CPE!
             </p>
             <p>
-                Track continuous performance engagement.
+                Share your Continuous Performance Engagement details.
             </p>
         </field>
     </record>

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<o                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="manager_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="rre_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="discussion_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>>
+<odoo>
     <!-- RRE Tree View -->
     <record id="view_performance_rre_tree" model="ir.ui.view">
         <field name="name">performance.rre.tree</field>
@@ -12,6 +9,7 @@
                   decoration-success="state == 'reviewed_by_manager'" 
                   decoration-warning="state == 'submitted_by_employee'">
                 <field name="employee_id"/>
+                <field name="manager_id"/>
                 <field name="rre_date"/>
                 <field name="discussion_date"/>
                 <field name="state"/>
@@ -29,22 +27,23 @@
                     <button name="action_submit_rre" string="Submit RRE"
                             type="object" class="oe_highlight"
                             groups="performance_reviews.group_employee"
-                            modifiers="{'invisible': [('state', '!=', 'draft')]}"/>
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
                     <button name="action_submit_review" string="Submit Review"
                             type="object" class="oe_highlight"
                             groups="performance_reviews.group_employee"
-                            modifiers="{'invisible': [('state', '!=', 'submitted_by_employee')]}"/>
+                            attrs="{'invisible': [('state', '!=', 'submitted_by_employee')]}"/>
                     <button name="action_reset_to_draft" string="Reset to Draft"
                             type="object" groups="performance_reviews.group_hr_manager"
-                            modifiers="{'invisible': [('state', '=', 'draft')]}"/>
+                            attrs="{'invisible': [('state', '=', 'draft')]}"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
                     <group>
                         <group>
-                            <field name="employee_id" modifiers="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="rre_date" modifiers="{'readonly': [('state', '!=', 'draft')]}"/>
-                            <field name="discussion_date" modifiers="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="employee_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="manager_id" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="rre_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                            <field name="discussion_date" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
                         </group>
                     </group>
                     <notebook>
@@ -79,6 +78,7 @@
         <field name="arch" type="xml">
             <search string="Search RRE">
                 <field name="employee_id"/>
+                <field name="manager_id"/>
                 <field name="rre_date"/>
                 <field name="discussion_date"/>
                 <filter string="My RREs" name="my_rres" 
@@ -94,6 +94,8 @@
                 <group expand="0" string="Group By">
                     <filter string="Employee" name="employee" 
                             context="{'group_by': 'employee_id'}"/>
+                    <filter string="Manager" name="manager" 
+                            context="{'group_by': 'manager_id'}"/>
                     <filter string="Status" name="status" 
                             context="{'group_by': 'state'}"/>
                     <filter string="RRE Date" name="rre_date" 
