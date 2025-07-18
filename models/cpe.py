@@ -96,8 +96,8 @@ class PerformanceCPE(models.Model):
         if not self.manager_id:
             raise ValidationError(_("No manager assigned to this CPE."))
             
-        if self.env.user.id != self.manager_id.id and not self.env.user.has_group('performance_reviews.group_hr_manager'):
-            raise ValidationError(_("Only the assigned manager or HR managers can submit reviews."))
+        if self.env.user.id != self.manager_id.id:
+            raise ValidationError(_("Only the assigned manager can submit reviews."))
         
         if not self.manager_feedback or not self.manager_feedback.strip():
             raise ValidationError(_("Please provide feedback before submitting the review."))

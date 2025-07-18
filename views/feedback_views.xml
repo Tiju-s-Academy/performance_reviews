@@ -29,8 +29,7 @@
                             invisible="state != 'draft'"/>
                     <button name="action_complete_feedback" string="Complete Feedback"
                             type="object" class="oe_highlight"
-                            groups="performance_reviews.group_hr_manager"
-                            invisible="state != 'in_progress'"/>
+                            invisible="state != 'in_progress' or env.uid != manager_id.id"/>
                     <button name="action_reset_to_draft" string="Reset to Draft"
                             type="object" groups="performance_reviews.group_hr_manager"
                             invisible="state == 'draft'"/>
@@ -53,23 +52,23 @@
                         </page>
                         <page string="Feedback Details" name="feedback">
                             <group>
-                                <field name="technical_performance" readonly="state == 'completed'" 
-                                       groups="performance_reviews.group_hr_manager" 
+                                <field name="technical_performance" 
+                                       readonly="not (env.uid == manager_id.id and state != 'completed')"
                                        placeholder="Technical performance feedback (max 500 words)"/>
-                                <field name="interpersonal_skills" readonly="state == 'completed'" 
-                                       groups="performance_reviews.group_hr_manager" 
+                                <field name="interpersonal_skills" 
+                                       readonly="not (env.uid == manager_id.id and state != 'completed')"
                                        placeholder="Interpersonal skills feedback (max 500 words)"/>
-                                <field name="leadership_skills" readonly="state == 'completed'" 
-                                       groups="performance_reviews.group_hr_manager" 
+                                <field name="leadership_skills" 
+                                       readonly="not (env.uid == manager_id.id and state != 'completed')"
                                        placeholder="Leadership skills feedback (max 500 words)"/>
-                                <field name="strengths" readonly="state == 'completed'" 
-                                       groups="performance_reviews.group_hr_manager" 
+                                <field name="strengths" 
+                                       readonly="not (env.uid == manager_id.id and state != 'completed')"
                                        placeholder="Strengths observed (max 500 words)"/>
-                                <field name="areas_for_improvement" readonly="state == 'completed'" 
-                                       groups="performance_reviews.group_hr_manager" 
+                                <field name="areas_for_improvement" 
+                                       readonly="not (env.uid == manager_id.id and state != 'completed')"
                                        placeholder="Areas for improvement (max 500 words)"/>
-                                <field name="overall_feedback" readonly="state == 'completed'" 
-                                       groups="performance_reviews.group_hr_manager" 
+                                <field name="overall_feedback" 
+                                       readonly="not (env.uid == manager_id.id and state != 'completed')"
                                        placeholder="Overall feedback (max 500 words)"/>
                             </group>
                         </page>
