@@ -29,7 +29,7 @@
                             invisible="state != 'draft'"/>
                     <button name="action_submit_review" string="Submit Review"
                             type="object" class="oe_highlight"
-                            invisible="state != 'submitted' or env.uid != manager_id.id"/>
+                            invisible="state != 'submitted' or manager_id != uid"/>
                     <button name="action_reset_to_draft" string="Reset to Draft"
                             type="object" groups="performance_reviews.group_hr_manager"
                             invisible="state == 'draft'"/>
@@ -59,7 +59,7 @@
                         <page string="Manager Feedback" name="feedback">
                             <group>
                                 <field name="manager_feedback" 
-                                       readonly="not (env.uid == manager_id.id and state != 'reviewed')"
+                                       readonly="manager_id != uid or state == 'reviewed'"
                                        placeholder="Manager's feedback (max 300 words)"/>
                             </group>
                         </page>
