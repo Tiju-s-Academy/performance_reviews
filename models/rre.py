@@ -83,22 +83,18 @@ class PerformanceRRE(models.Model):
         template = self.env.ref('performance_reviews.email_template_rre_submitted')
         template.send_mail(self.id, force_send=True)
 
+        # Return a combined action for both reload and rainbow man
         return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': _('Success'),
-                'message': _('RRE has been submitted to your manager.'),
-                'type': 'success',
-                'sticky': False,
-                'next': {
-                    'type': 'ir.actions.client',
-                    'tag': 'effect',
-                    'effects': {
-                        'type': 'rainbow_man',
-                        'message': _('Well done! Your RRE has been submitted successfully!'),
-                    }
-                }
+            'type': 'ir.actions.act_window',
+            'res_model': 'performance.rre',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'current',
+            'flags': {'mode': 'readonly'},
+            'effect': {
+                'fadeout': 'fast',
+                'message': _('Well done! Your RRE has been submitted successfully!'),
+                'type': 'rainbow_man',
             }
         }
 
@@ -120,22 +116,18 @@ class PerformanceRRE(models.Model):
         template = self.env.ref('performance_reviews.email_template_rre_reviewed')
         template.send_mail(self.id, force_send=True)
 
+        # Return a combined action for both reload and rainbow man
         return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': _('Success'),
-                'message': _('Review has been submitted successfully.'),
-                'type': 'success',
-                'sticky': False,
-                'next': {
-                    'type': 'ir.actions.client',
-                    'tag': 'effect',
-                    'effects': {
-                        'type': 'rainbow_man',
-                        'message': _('Great job! The review has been submitted successfully!'),
-                    }
-                }
+            'type': 'ir.actions.act_window',
+            'res_model': 'performance.rre',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'current',
+            'flags': {'mode': 'readonly'},
+            'effect': {
+                'fadeout': 'fast',
+                'message': _('Great job! The review has been submitted successfully!'),
+                'type': 'rainbow_man',
             }
         }
         
@@ -148,12 +140,15 @@ class PerformanceRRE(models.Model):
         self.state = 'draft'
         
         return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': _('Reset Successful'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'performance.rre',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'current',
+            'flags': {'mode': 'edit'},
+            'effect': {
+                'fadeout': 'fast',
                 'message': _('RRE has been reset to draft state.'),
-                'type': 'success',
-                'sticky': False,
+                'type': 'rainbow_man',
             }
         }

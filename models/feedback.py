@@ -115,22 +115,18 @@ class PerformanceFeedback(models.Model):
         template = self.env.ref('performance_reviews.email_template_feedback_submitted')
         template.send_mail(self.id, force_send=True)
 
+        # Return a combined action for both reload and rainbow man
         return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': _('Success'),
-                'message': _('360° feedback request has been submitted.'),
-                'type': 'success',
-                'sticky': False,
-                'next': {
-                    'type': 'ir.actions.client',
-                    'tag': 'effect',
-                    'effects': {
-                        'type': 'rainbow_man',
-                        'message': _('Well done! Your 360° feedback request has been submitted!'),
-                    }
-                }
+            'type': 'ir.actions.act_window',
+            'res_model': 'performance.feedback',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'current',
+            'flags': {'mode': 'readonly'},
+            'effect': {
+                'fadeout': 'fast',
+                'message': _('Well done! Your 360° feedback request has been submitted!'),
+                'type': 'rainbow_man',
             }
         }
 
@@ -158,22 +154,18 @@ class PerformanceFeedback(models.Model):
         
         self.state = 'completed'
 
+        # Return a combined action for both reload and rainbow man
         return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': _('Success'),
-                'message': _('360° feedback has been completed.'),
-                'type': 'success',
-                'sticky': False,
-                'next': {
-                    'type': 'ir.actions.client',
-                    'tag': 'effect',
-                    'effects': {
-                        'type': 'rainbow_man',
-                        'message': _('Great job! The 360° feedback has been completed successfully!'),
-                    }
-                }
+            'type': 'ir.actions.act_window',
+            'res_model': 'performance.feedback',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'current',
+            'flags': {'mode': 'readonly'},
+            'effect': {
+                'fadeout': 'fast',
+                'message': _('Great job! The 360° feedback has been completed successfully!'),
+                'type': 'rainbow_man',
             }
         }
         
@@ -185,13 +177,17 @@ class PerformanceFeedback(models.Model):
         
         self.state = 'draft'
         
+        # Return a combined action for both reload and rainbow man
         return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': {
-                'title': _('Reset Successful'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'performance.feedback',
+            'res_id': self.id,
+            'view_mode': 'form',
+            'target': 'current',
+            'flags': {'mode': 'edit'},
+            'effect': {
+                'fadeout': 'fast',
                 'message': _('360° Feedback has been reset to draft state.'),
-                'type': 'success',
-                'sticky': False,
+                'type': 'rainbow_man',
             }
         }
