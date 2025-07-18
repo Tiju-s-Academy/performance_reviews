@@ -123,6 +123,14 @@ class PerformanceFeedback(models.Model):
                 'message': _('360° feedback request has been submitted.'),
                 'type': 'success',
                 'sticky': False,
+                'next': {
+                    'type': 'ir.actions.client',
+                    'tag': 'effect',
+                    'effects': {
+                        'type': 'rainbow_man',
+                        'message': _('Well done! Your 360° feedback request has been submitted!'),
+                    }
+                }
             }
         }
 
@@ -158,6 +166,14 @@ class PerformanceFeedback(models.Model):
                 'message': _('360° feedback has been completed.'),
                 'type': 'success',
                 'sticky': False,
+                'next': {
+                    'type': 'ir.actions.client',
+                    'tag': 'effect',
+                    'effects': {
+                        'type': 'rainbow_man',
+                        'message': _('Great job! The 360° feedback has been completed successfully!'),
+                    }
+                }
             }
         }
         

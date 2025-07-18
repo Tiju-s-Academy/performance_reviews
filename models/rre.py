@@ -91,6 +91,14 @@ class PerformanceRRE(models.Model):
                 'message': _('RRE has been submitted to your manager.'),
                 'type': 'success',
                 'sticky': False,
+                'next': {
+                    'type': 'ir.actions.client',
+                    'tag': 'effect',
+                    'effects': {
+                        'type': 'rainbow_man',
+                        'message': _('Well done! Your RRE has been submitted successfully!'),
+                    }
+                }
             }
         }
 
@@ -120,6 +128,14 @@ class PerformanceRRE(models.Model):
                 'message': _('Review has been submitted successfully.'),
                 'type': 'success',
                 'sticky': False,
+                'next': {
+                    'type': 'ir.actions.client',
+                    'tag': 'effect',
+                    'effects': {
+                        'type': 'rainbow_man',
+                        'message': _('Great job! The review has been submitted successfully!'),
+                    }
+                }
             }
         }
         

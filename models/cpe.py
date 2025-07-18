@@ -79,6 +79,14 @@ class PerformanceCPE(models.Model):
                 'message': _('CPE has been submitted to your manager.'),
                 'type': 'success',
                 'sticky': False,
+                'next': {
+                    'type': 'ir.actions.client',
+                    'tag': 'effect',
+                    'effects': {
+                        'type': 'rainbow_man',
+                        'message': _('Well done! Your CPE has been submitted successfully!'),
+                    }
+                }
             }
         }
 
@@ -108,6 +116,14 @@ class PerformanceCPE(models.Model):
                 'message': _('Review has been submitted successfully.'),
                 'type': 'success',
                 'sticky': False,
+                'next': {
+                    'type': 'ir.actions.client',
+                    'tag': 'effect',
+                    'effects': {
+                        'type': 'rainbow_man',
+                        'message': _('Great job! The review has been submitted successfully!'),
+                    }
+                }
             }
         }
         
