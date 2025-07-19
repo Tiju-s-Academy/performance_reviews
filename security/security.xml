@@ -22,17 +22,10 @@
 
     <!-- Record Rules -->
     <!-- RRE Rules -->
-    <record id="rule_rre_employee" model="ir.rule">
-        <field name="name">Employee RRE Rule</field>
+    <record id="rule_rre_all_access" model="ir.rule">
+        <field name="name">RRE Access Rule</field>
         <field name="model_id" ref="model_performance_rre"/>
-        <field name="domain_force">['|', ('employee_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
-    </record>
-
-    <record id="rule_rre_manager" model="ir.rule">
-        <field name="name">Manager RRE Rule</field>
-        <field name="model_id" ref="model_performance_rre"/>
-        <field name="domain_force">[('manager_id.user_id', '=', user.id)]</field>
+        <field name="domain_force">['|', '|', ('employee_id.user_id', '=', user.id), ('manager_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
         <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
     </record>
 
@@ -44,17 +37,10 @@
     </record>
 
     <!-- CPE Rules -->
-    <record id="rule_cpe_employee" model="ir.rule">
-        <field name="name">Employee CPE Rule</field>
+    <record id="rule_cpe_all_access" model="ir.rule">
+        <field name="name">CPE Access Rule</field>
         <field name="model_id" ref="model_performance_cpe"/>
-        <field name="domain_force">['|', ('employee_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
-    </record>
-
-    <record id="rule_cpe_manager" model="ir.rule">
-        <field name="name">Manager CPE Rule</field>
-        <field name="model_id" ref="model_performance_cpe"/>
-        <field name="domain_force">[('manager_id.user_id', '=', user.id)]</field>
+        <field name="domain_force">['|', '|', ('employee_id.user_id', '=', user.id), ('manager_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
         <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
     </record>
 
@@ -66,17 +52,10 @@
     </record>
 
     <!-- Feedback Rules -->
-    <record id="rule_feedback_employee" model="ir.rule">
-        <field name="name">Employee Feedback Rule</field>
+    <record id="rule_feedback_all_access" model="ir.rule">
+        <field name="name">Feedback Access Rule</field>
         <field name="model_id" ref="model_performance_feedback"/>
-        <field name="domain_force">['|', ('employee_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
-        <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
-    </record>
-
-    <record id="rule_feedback_manager" model="ir.rule">
-        <field name="name">Manager Feedback Rule</field>
-        <field name="model_id" ref="model_performance_feedback"/>
-        <field name="domain_force">[('manager_id.user_id', '=', user.id)]</field>
+        <field name="domain_force">['|', '|', ('employee_id.user_id', '=', user.id), ('manager_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
         <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
     </record>
 
