@@ -153,7 +153,10 @@ class PerformanceFeedback(models.Model):
                 raise ValidationError(_(f"{field_name} is required."))
         
         self.state = 'completed'
-
+        
+        # Send email to employee
+        template = self.env.ref('performance_reviews.email_template_feedback_completed')
+        template.send_mail(self.id, force_send=True)
         # Return a combined action for both reload and rainbow man
         return {
             'type': 'ir.actions.act_window',

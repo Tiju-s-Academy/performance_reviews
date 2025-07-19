@@ -70,7 +70,10 @@ class PerformanceCPE(models.Model):
             raise ValidationError(_("Only the employee can submit their own CPE."))
         
         self.state = 'submitted'
-
+        
+        # Send email to manager
+        template = self.env.ref('performance_reviews.email_template_cpe_reviewed_by_employee')
+        template.send_mail(self.id, force_send=True)
         # Return a combined action for both reload and rainbow man
         return {
             'type': 'ir.actions.act_window',
@@ -101,7 +104,7 @@ class PerformanceCPE(models.Model):
         self.state = 'reviewed'
         
         # Send email to employee
-        template = self.env.ref('performance_reviews.email_template_cpe_submitted')
+        template = self.env.ref('performance_reviews.email_template_cpe_reviewed')
         template.send_mail(self.id, force_send=True)
 
         # Return a combined action for both reload and rainbow man
