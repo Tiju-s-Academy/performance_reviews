@@ -25,7 +25,7 @@
     <record id="rule_rre_employee" model="ir.rule">
         <field name="name">Employee RRE Rule</field>
         <field name="model_id" ref="model_performance_rre"/>
-        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="domain_force">['|', ('employee_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
         <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
     </record>
 
@@ -47,7 +47,7 @@
     <record id="rule_cpe_employee" model="ir.rule">
         <field name="name">Employee CPE Rule</field>
         <field name="model_id" ref="model_performance_cpe"/>
-        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="domain_force">['|', ('employee_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
         <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
     </record>
 
@@ -69,7 +69,7 @@
     <record id="rule_feedback_employee" model="ir.rule">
         <field name="name">Employee Feedback Rule</field>
         <field name="model_id" ref="model_performance_feedback"/>
-        <field name="domain_force">[('employee_id.user_id', '=', user.id)]</field>
+        <field name="domain_force">['|', ('employee_id.user_id', '=', user.id), ('create_uid', '=', user.id)]</field>
         <field name="groups" eval="[(4, ref('performance_reviews.group_employee'))]"/>
     </record>
 
