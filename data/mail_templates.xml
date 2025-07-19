@@ -1,109 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- RRE Submitted Template -->
-    <record id="email_template_rre_submitted" model="mail.template">
-        <field name="name">RRE: Submitted by Employee</field>
-        <field name="model_id" ref="model_performance_rre"/>
-        <field name="subject">New RRE Submission from {{ object.employee_id.name }}</field>
-        <field name="email_from">{{ user.email_formatted }}</field>
-        <field name="email_to">{{ object.employee_id.company_id.email }}</field>
-        <field name="body_html" type="html">
-            <div style="margin: 0px; padding: 0px;">
-                <p>Hello,</p>
-                <p>A new RRE has been submitted by {{ object.employee_id.name }} for your review.</p>
-                <p>Details:</p>
-                <ul>
-                    <li>Employee: {{ object.employee_id.name }}</li>
-                    <li>RRE Date: {{ object.rre_date }}</li>
-                    <li>Discussion Date: {{ object.discussion_date }}</li>
-                </ul>
-                <p>You can review the RRE by clicking the following link:</p>
-                <div style="margin: 16px 0px 16px 0px;">
-                    <a href="/web#id={{ object.id }}&amp;view_type=form&amp;model={{ object._name }}"
-                       style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
-                        Review RRE
-                    </a>
+    <data>
+        <!-- RRE Submitted Template -->
+        <record id="email_template_rre_submitted" model="mail.template">
+            <field name="name">RRE: Submitted by Employee</field>
+            <field name="model_id" ref="model_performance_rre"/>
+            <field name="subject">New RRE Submission from ${object.employee_id.name}</field>
+            <field name="email_from">${user.email_formatted}</field>
+            <field name="email_to">${object.manager_id.email_formatted}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Hello ${object.manager_id.name},</p>
+                    <p>A new RRE has been submitted by ${object.employee_id.name} for your review.</p>
+                    <p>Details:</p>
+                    <ul>
+                        <li>Employee: ${object.employee_id.name}</li>
+                        <li>RRE Date: ${object.rre_date}</li>
+                        <li>Discussion Date: ${object.discussion_date}</li>
+                    </ul>
+                    <p>You can review the RRE by clicking the following link:</p>
+                    <div style="margin: 16px 0px 16px 0px;">
+                        <a href="/web#id=${object.id}&amp;view_type=form&amp;model=${object._name}"
+                           style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                            Review RRE
+                        </a>
+                    </div>
+                    <p>Please provide your feedback and submit your review.</p>
+                    <p>Best regards,<br/>Performance Reviews System</p>
                 </div>
-            </div>
-        </field>
-        <field name="lang">{{ object.employee_id.lang }}</field>
-        <field name="auto_delete" eval="True"/>
-    </record>
+            </field>
+            <field name="lang">${object.manager_id.lang}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
 
-    <!-- RRE Reviewed Template -->
-    <record id="email_template_rre_reviewed" model="mail.template">
-        <field name="name">RRE: Reviewed by Manager</field>
-        <field name="model_id" ref="model_performance_rre"/>
-        <field name="subject">Your RRE has been reviewed</field>
-        <field name="email_from">{{ user.email_formatted }}</field>
-        <field name="email_to">{{ object.employee_id.email_formatted }}</field>
-        <field name="body_html" type="html">
-            <div style="margin: 0px; padding: 0px;">
-                <p>Hello {{ object.employee_id.name }},</p>
-                <p>Your RRE has been reviewed by your manager.</p>
-                <p>You can view the feedback by clicking the following link:</p>
-                <div style="margin: 16px 0px 16px 0px;">
-                    <a href="/web#id={{ object.id }}&amp;view_type=form&amp;model={{ object._name }}"
-                       style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
-                        View Feedback
-                    </a>
+        <!-- RRE Reviewed Template -->
+        <record id="email_template_rre_reviewed" model="mail.template">
+            <field name="name">RRE: Reviewed by Manager</field>
+            <field name="model_id" ref="model_performance_rre"/>
+            <field name="subject">Your RRE has been reviewed by ${object.manager_id.name}</field>
+            <field name="email_from">${user.email_formatted}</field>
+            <field name="email_to">${object.employee_id.email_formatted}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px;">
+                    <p>Hello ${object.employee_id.name},</p>
+                    <p>Your RRE has been reviewed by your manager ${object.manager_id.name}.</p>
+                    <p>Details:</p>
+                    <ul>
+                        <li>Manager: ${object.manager_id.name}</li>
+                        <li>Review Date: ${object.rre_date}</li>
+                        <li>Discussion Date: ${object.discussion_date}</li>
+                    </ul>
+                    <p>You can view the completed RRE by clicking the following link:</p>
+                    <div style="margin: 16px 0px 16px 0px;">
+                        <a href="/web#id=${object.id}&amp;view_type=form&amp;model=${object._name}"
+                           style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
+                            View RRE
+                        </a>
+                    </div>
+                    <p>Thank you for participating in the performance review process.</p>
+                    <p>Best regards,<br/>Performance Reviews System</p>
                 </div>
-            </div>
-        </field>
-        <field name="lang">{{ object.employee_id.lang }}</field>
-        <field name="auto_delete" eval="True"/>
-    </record>
-
-    <!-- CPE Submitted Template -->
-    <record id="email_template_cpe_submitted" model="mail.template">
-        <field name="name">CPE: Submitted by Manager</field>
-        <field name="model_id" ref="model_performance_cpe"/>
-        <field name="subject">New CPE for your review</field>
-        <field name="email_from">{{ user.email_formatted }}</field>
-        <field name="email_to">{{ object.employee_id.email_formatted }}</field>
-        <field name="body_html" type="html">
-            <div style="margin: 0px; padding: 0px;">
-                <p>Hello {{ object.employee_id.name }},</p>
-                <p>A new CPE has been submitted for your review and acknowledgment.</p>
-                <p>Details:</p>
-                <ul>
-                    <li>CPE Date: {{ object.cpe_date }}</li>
-                </ul>
-                <p>Please review and acknowledge the CPE by clicking the following link:</p>
-                <div style="margin: 16px 0px 16px 0px;">
-                    <a href="/web#id={{ object.id }}&amp;view_type=form&amp;model={{ object._name }}"
-                       style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
-                        Review CPE
-                    </a>
-                </div>
-            </div>
-        </field>
-        <field name="lang">{{ object.employee_id.lang }}</field>
-        <field name="auto_delete" eval="True"/>
-    </record>
-
-    <!-- 360 Feedback Submitted Template -->
-    <record id="email_template_feedback_submitted" model="mail.template">
-        <field name="name">360 Feedback: New Submission</field>
-        <field name="model_id" ref="model_performance_feedback"/>
-        <field name="subject">New 360° Feedback Submission from {{ object.employee_id.name }}</field>
-        <field name="email_from">{{ user.email_formatted }}</field>
-        <field name="email_to">{{ object.employee_id.company_id.email }}, {{ object.employee_id.email_formatted }}</field>
-        <field name="body_html" type="html">
-            <div style="margin: 0px; padding: 0px;">
-                <p>Hello,</p>
-                <p>A new 360° feedback has been submitted by {{ object.employee_id.name }}.</p>
-                <p>Number of reviewers: {{ object.reviewers|length }}</p>
-                <p>You can review the feedback by clicking the following link:</p>
-                <div style="margin: 16px 0px 16px 0px;">
-                    <a href="/web#id={{ object.id }}&amp;view_type=form&amp;model={{ object._name }}"
-                       style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
-                        View Feedback
-                    </a>
-                </div>
-            </div>
-        </field>
-        <field name="lang">{{ object.employee_id.lang }}</field>
-        <field name="auto_delete" eval="True"/>
-    </record>
+            </field>
+            <field name="lang">${object.employee_id.lang}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+    </data>
 </odoo>
